@@ -10,6 +10,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float moveSpeed = 2.0f;
 
+    void Awake()
+    {
+        Actions.MoveEvent += HandlePlayerMovement;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +27,13 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void HandlePlayerMovement()
+    void HandlePlayerMovement(Vector2 moveDirection)
     {
         characterController.Move(moveDirection * Time.deltaTime);
     }
 
+    void OnDisable()
+    {
+        Actions.MoveEvent -= HandlePlayerMovement;
+    }
 }
