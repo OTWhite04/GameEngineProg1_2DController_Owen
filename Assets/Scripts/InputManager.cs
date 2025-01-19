@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
 {
 
     private PlayerController playerController;
+    
 
     void Awake()
     {
@@ -20,12 +21,8 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if(context.performed)
-        {
-            Debug.Log("Receiving move input : " + context.ReadValue<Vector2>());
-            Actions.MoveEvent?.Invoke(context.ReadValue<Vector2>());
-        }
-        
+        Debug.Log("Receiving move input : " + context.ReadValue<Vector2>());
+        Actions.MoveEvent?.Invoke(context.ReadValue<Vector2>());
     }
 
     // Start is called before the first frame update
@@ -40,11 +37,23 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
         
     }
 
-    
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            Actions.StartInteractEvent?.Invoke();
+        }
 
-    
+        if (context.canceled)
+        {
+            Actions.CanceledInteractEvent?.Invoke();
+        }
+    }
 }
 public class Actions
 {
     public static Action<Vector2> MoveEvent;
+    public static Action StartInteractEvent;
+    public static Action CanceledInteractEvent;
+    
 }
