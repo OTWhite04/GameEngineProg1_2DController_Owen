@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
 {
-
+    //Reference for the player controller.
     private PlayerController playerController;
     
-
+    //Enabling the player controller on awake.
     void Awake()
     {
         playerController = new PlayerController();
@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
         playerController.Player.SetCallbacks(this);
     }
 
+    //Method for printing movement direction to console and invoking the movement.
     public void OnMove(InputAction.CallbackContext context)
     {
         Debug.Log("Receiving move input : " + context.ReadValue<Vector2>());
@@ -37,6 +38,7 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
         
     }
 
+    //Method for invoking the start and canceled interact actions.
     public void OnInteract(InputAction.CallbackContext context)
     {
         if(context.started)
@@ -50,6 +52,8 @@ public class InputManager : MonoBehaviour, PlayerController.IPlayerActions
         }
     }
 }
+
+//Class for all the actions.
 public class Actions
 {
     public static Action<Vector2> MoveEvent;
